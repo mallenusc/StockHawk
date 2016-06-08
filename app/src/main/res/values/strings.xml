@@ -7,7 +7,37 @@
   <string name="action_change_units">Change Units</string>
   <string name="symbol_search">Symbol Search</string>
   <string name="content_test">Search for a Stock Symbol</string>
-  <string name="input_hint">FB</string>
+  <string name="input_hint" translatable="false">FB</string>
   <string name="input_prefill"></string>
   <string name="network_toast">Uh-oh! This app requires an internet connection</string>
+
+
+  <string name="button_1_day">1 day</string>
+  <string name="button_5_day">5 day</string>
+  <string name="button_1_month">1 month</string>
+
+  <string name="button_3_month">3 month</string>
+  <string name="button_1_year">1 year</string>
+  <string name="button_5_year">5 year</string>
+
+  <string name="save_message">This stock is already saved!</string>
+  <string name="valid_cursor">This should only be called when Cursor is valid</string>
+  <string name="invalid_cursor">"Could not move Cursor to position:</string>
+
+  <string name="add_stock">Button add new stock symbol</string>
+
+  <string name="content_1_day">Button view 1 day graph</string>
+  <string name="content_5_day">Button view 5 day graph</string>
+  <string name="content_1_month">Button vie 1 month graph</string>
+  <string name="content_3_month">Button view 3 month graph</string>
+  <string name="content_1_year">Button view 1 year graph</string>
+  <string name="content_5_year">Button view 5 year graph</string>
+
+  <string name="batch_insert_error">Error applying batch insert</string>
+  <string name="empty_string"></string>
+  <string name="no_internet">Please check your internet connection.</string>
+
+
+
+
 </resources>

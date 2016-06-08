@@ -6,8 +6,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-
+        android:theme="@style/AppTheme"
+        android:supportsRtl="true"
+        >
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
         <uses-permission android:name="android.permission.INTERNET" />
         <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
         <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -27,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.sam_chordas.android.stockhawk.ui.MyGraphActivity"
+            android:label="@string/app_name" >
+        </activity>
         <service android:name="com.sam_chordas.android.stockhawk.service.StockTaskService"
             android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
             android:exported="true">
@@ -35,6 +41,31 @@
             </intent-filter>
         </service>
         <service android:name="com.sam_chordas.android.stockhawk.service.StockIntentService" />
+
+        <service
+            android:name="com.sam_chordas.android.stockhawk.service.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver android:name=".data.WidgetQuoteProvider">
+            <intent-filter>
+                <action
+                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widgetinfo" />
+        </receiver>
+
+
+        <receiver
+            android:name="NetworkChangeReceiver"
+            android:label="NetworkChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:authorities="com.sam_chordas.android.stockhawk.data.QuoteProvider"
             android:name="com.sam_chordas.android.stockhawk.data.generated.QuoteProvider"

@@ -2,12 +2,16 @@ package com.sam_chordas.android.stockhawk.rest;
 
 import android.content.ContentProviderOperation;
 import android.util.Log;
+
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
-import java.util.ArrayList;
+import com.sam_chordas.android.stockhawk.models.Quotes;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by sam_chordas on 10/8/15.
@@ -30,14 +34,20 @@ public class Utils {
         if (count == 1){
           jsonObject = jsonObject.getJSONObject("results")
               .getJSONObject("quote");
-          batchOperations.add(buildBatchOperation(jsonObject));
+          //Check to see if result is valid stock quote
+          if (!jsonObject.isNull("Bid")) {
+            batchOperations.add(buildBatchOperation(jsonObject));
+          }
         } else{
           resultsArray = jsonObject.getJSONObject("results").getJSONArray("quote");
 
           if (resultsArray != null && resultsArray.length() != 0){
             for (int i = 0; i < resultsArray.length(); i++){
               jsonObject = resultsArray.getJSONObject(i);
-              batchOperations.add(buildBatchOperation(jsonObject));
+              //Check to see if result is valid stock quote
+              if (!jsonObject.isNull("Bid")) {
+                batchOperations.add(buildBatchOperation(jsonObject));
+              }
             }
           }
         }
@@ -46,6 +56,77 @@ public class Utils {
       Log.e(LOG_TAG, "String to JSON failed: " + e);
     }
     return batchOperations;
+  }
+
+
+  public static Quotes quoteChartJsonToContentVals(String JSON){
+    ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
+    JSONObject jsonObject = null;
+    JSONArray resultsArray = null;
+
+    try{
+      jsonObject = new JSONObject(JSON);
+      if (jsonObject != null && jsonObject.length() != 0){
+
+        jsonObject = jsonObject.getJSONObject("query");
+        int count = Integer.parseInt(jsonObject.getString("count"));
+        if(count > 0)
+        {
+//          float prices[] = new float[10];
+//          String dates[] = new String[10];
+
+          float prices[] = new float[count];
+          String dates[] = new String[count];
+
+          resultsArray = jsonObject.getJSONObject("results").getJSONArray("quote");
+
+          if (resultsArray != null && resultsArray.length() != 0) {
+            for (int i = 0; i < resultsArray.length(); i++) {
+              jsonObject = resultsArray.getJSONObject(i);
+              //Check to see if result is valid stock quote
+              String symbol = jsonObject.getString("Symbol");
+              String date = jsonObject.getString("Date");
+              String open = jsonObject.getString("Open");
+              String high = jsonObject.getString("High");
+              String low = jsonObject.getString("Low");
+              String close = jsonObject.getString("Close");
+              String volume = jsonObject.getString("Volume");
+              String adjClose = jsonObject.getString("Adj_Close");
+
+              Log.e("**","result symbol: " + i + "  - " + symbol);
+              Log.e("**","result date: " + i + "  - " + date);
+              Log.e("**","result open: " + i + "  - " + open);
+
+              Log.e("**","result high: " + i + "  - " + high);
+              Log.e("**","result low: " + i + "  - " + low);
+              Log.e("**","result close: " + i + "  - " + close);
+
+              Log.e("**","result volume: " + i + "  - " + volume);
+              Log.e("**","result adjClose: " + i + "  - " + adjClose);
+//if(i < 10)
+              if(i < count) {
+                prices[i] = Float.parseFloat(close);
+                // dates[i] = date;
+                dates[i] = "";
+              }
+              //Log.e("**","result i: " + i + "  - " + jsonObject.toString());
+//              if (!jsonObject.isNull("Bid")) {
+//                batchOperations.add(buildBatchOperation(jsonObject));
+//              }
+            }
+
+
+            return new Quotes(prices,dates);
+          }
+
+        }
+
+      }
+    } catch (JSONException e){
+      Log.e(LOG_TAG, "String to JSON failed: " + e);
+    }
+
+    return null;
   }
 
   public static String truncateBidPrice(String bidPrice){

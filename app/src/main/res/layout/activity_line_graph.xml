@@ -3,10 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.db.chart.view.LineChartView
-        xmlns:chart="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/linechart"
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        card_view:cardBackgroundColor="#343f57">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <include layout="@layout/card_stock_chart" android:id="@+id/chart_toolbar"/>
+
+            <TableLayout
+                android:id="@+id/table_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*"
+                >
+
+            </TableLayout>
+
+            <com.db.chart.view.LineChartView
+                android:id="@+id/stock_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/table_menu"
+                />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
 </FrameLayout>
