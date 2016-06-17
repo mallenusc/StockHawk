@@ -45,40 +45,7 @@ public class StockChart extends CardController {
     public void show(Runnable action) {
         super.show(action);
 
-        // Tooltip
-//        mTip = new Tooltip(mContext, R.layout.linechart_three_tooltip, R.id.value);
-//
-//
-//        mTip.setVerticalAlignment(Tooltip.Alignment.BOTTOM_TOP);
-//        mTip.setDimensions((int) Tools.fromDpToPx(65), (int) Tools.fromDpToPx(25));
-//
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-//
-//            mTip.setEnterAnimation(PropertyValuesHolder.ofFloat(View.ALPHA, 1),
-//                    PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f),
-//                    PropertyValuesHolder.ofFloat(View.SCALE_X, 1f)).setDuration(200);
-//
-//            mTip.setExitAnimation(PropertyValuesHolder.ofFloat(View.ALPHA, 0),
-//                    PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f),
-//                    PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)).setDuration(200);
-//
-//            mTip.setPivotX(Tools.fromDpToPx(65) / 2);
-//            mTip.setPivotY(Tools.fromDpToPx(25));
-//        }
-//
-//        mChart.setTooltips(mTip);
 
-        // Data
-
-
-        // LineSet dataset = new LineSet(mLabels, mValues);
-//        dataset.setColor(Color.parseColor("#758cbb"))
-//                .setFill(Color.parseColor("#2d374c"))
-//                .setDotsColor(Color.parseColor("#758cbb"))
-//                .setThickness(1)
-//                .setDashed(new float[]{10f,10f})
-//                .beginAt(5);
-//        mChart.addData(dataset);
 
         LineSet dataset = new LineSet(mLabels, mValues);
         dataset.setColor(Color.parseColor("#b3b5bb"))
@@ -101,8 +68,6 @@ public class StockChart extends CardController {
             @Override
             public void run() {
                 mBaseAction.run();
-                //   mTip.prepare(mChart.getEntriesArea(0).get(3), mValues[0]);
-                //   mChart.showTooltip(mTip, true);
             }
         };
 
@@ -119,13 +84,6 @@ public class StockChart extends CardController {
         super.update();
 
         mChart.dismissAllTooltips();
-//        if (firstStage) {
-//            mChart.updateValues(0, mValues[1]);
-//            mChart.updateValues(1, mValues[1]);
-//        }else{
-//            mChart.updateValues(0, mValues[0]);
-//            mChart.updateValues(1, mValues[0]);
-//        }
         mChart.getChartAnimation().setEndAction(mBaseAction);
         mChart.notifyDataUpdate();
     }

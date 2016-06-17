@@ -18,17 +18,8 @@ package com.sam_chordas.android.stockhawk.ui;
 
 import android.os.Handler;
 import android.support.v7.widget.CardView;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-
-import com.sam_chordas.android.stockhawk.R;
 
 public class CardController {
-
-
-    private final ImageButton mPlayBtn;
-    private final ImageButton mUpdateBtn;
 
 
     private final Runnable showAction = new Runnable() {
@@ -47,7 +38,8 @@ public class CardController {
         public void run() {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    unlock();
+
+
                 }
             }, 500);
         }
@@ -60,25 +52,6 @@ public class CardController {
     protected CardController(CardView card) {
         super();
 
-        RelativeLayout toolbar = (RelativeLayout) card.findViewById(R.id.chart_toolbar);
-        mPlayBtn = (ImageButton) toolbar.findViewById(R.id.play);
-        mUpdateBtn = (ImageButton) toolbar.findViewById(R.id.update);
-
-        mPlayBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                dismiss(showAction);
-            }
-        });
-
-        mUpdateBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                update();
-            }
-        });
     }
 
 
@@ -88,27 +61,17 @@ public class CardController {
 
 
     protected void show(Runnable action) {
-        lock();
         firstStage = false;
     }
 
     protected void update() {
-        lock();
         firstStage = !firstStage;
     }
 
     protected void dismiss(Runnable action) {
-        lock();
+
     }
 
 
-    private void lock() {
-        mPlayBtn.setEnabled(false);
-        mUpdateBtn.setEnabled(false);
-    }
 
-    private void unlock() {
-        mPlayBtn.setEnabled(true);
-        mUpdateBtn.setEnabled(true);
-    }
 }
